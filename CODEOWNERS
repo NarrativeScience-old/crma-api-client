@@ -1,0 +1,11 @@
+# See: https://help.github.com/en/articles/about-code-owners
+
+# Default ownership
+*                         @NarrativeScience/talos-tech-leads
+
+# Infra related codeowners
+.circleci                 @NarrativeScience/cloud-eng-approved
+.flake8                   @NarrativeScience/cloud-eng-approved
+.githooks                 @NarrativeScience/cloud-eng-approved
+.pre-commit-config.yml    @NarrativeScience/cloud-eng-approved
+setup.cfg                 @NarrativeScience/cloud-eng-approved

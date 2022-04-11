@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "crma-api-client"
+version = "0.1.0"
+description = "CRM Analytics REST API Client"
+authors = ["Jonathan Drake <jon.drake@salesforce.com>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+homepage = "https://github.com/NarrativeScience/crma-api-client"
+repository = "https://github.com/NarrativeScience/crma-api-client"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^2.10.1"
+pytest = "^6.2.2"
+black = {version = "^21.9b0", allow-prereleases = true}
+cruft = "^2.9.0"
+
+[tool.cruft]
+skip = ["pyproject.toml", "crma_api_client", "tests", "README.md", ".circleci/config.yml"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

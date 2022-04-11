@@ -1,0 +1,20 @@
+{
+  "template": "https://github.com/NarrativeScience/cookiecutter-python-lib",
+  "commit": "f31f5912ab949296517c6d65fc666b11926a5cf8",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author_name": "Jonathan Drake",
+      "author_email": "jon.drake@salesforce.com",
+      "description": "CRM Analytics REST API Client",
+      "repo_name": "crma-api-client",
+      "github_team": "@NarrativeScience/talos-tech-leads",
+      "package_title": "crma-api-client",
+      "package_name": "crma_api_client",
+      "python_version": "3.9",
+      "visibility": "public",
+      "_template": "https://github.com/NarrativeScience/cookiecutter-python-lib"
+    }
+  },
+  "directory": null
+}

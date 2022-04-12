@@ -17,7 +17,10 @@ class Dataset(BaseModel):
 
 
 class DatasetVersion(BaseModel):
-    """Dataset version model"""
+    """Dataset version model
+
+    See https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_responses_dataset_version.htm
+    """
 
     created_by: User
     created_date: datetime
@@ -36,7 +39,10 @@ class DatasetVersion(BaseModel):
 
 
 class DatasetVersionsResponse(BaseModel):
-    """Response model for a list of dataset versions"""
+    """Response model for a list of dataset versions
+
+    See https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_responses_dataset_version_collection.htm
+    """
 
     url: str
     versions: List[DatasetVersion]

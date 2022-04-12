@@ -3,6 +3,7 @@
 import pytest
 
 from crma_api_client.client import CRMAAPIClient
+from crma_api_client.resources.query import ProjectionField
 
 
 @pytest.mark.asyncio
@@ -24,3 +25,8 @@ async def test_query(client: CRMAAPIClient):
         {"Category": "Office Supplies", "Sales": 719047.032},
         {"Category": "Technology", "Sales": 836154.033},
     ]
+    assert response.fields == [
+        ProjectionField(id="q.Category", type="string"),
+        ProjectionField(id="q.Sales", type="numeric"),
+    ]
+    assert response.fields[0].name == "Category"

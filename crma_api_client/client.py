@@ -163,7 +163,7 @@ class CRMAAPIClient:
             identifier: Dataset name or ID
 
         Returns:
-            DatasetVersionsResponse object
+            list of all versions for the dataset
 
         """
         response = await self.request(f"/wave/datasets/{identifier}/versions", "GET")
@@ -185,7 +185,7 @@ class CRMAAPIClient:
             timezone: Timezone for the query
 
         Returns:
-            QueryResponse object
+            query results containing records and metadata
 
         """
         json_data = {

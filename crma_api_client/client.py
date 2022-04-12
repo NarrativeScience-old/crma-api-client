@@ -2,13 +2,14 @@
 
 import logging
 from typing import Any, Dict, Optional
+from uuid import uuid4
 
 import backoff
 import httpx
 from pydantic import BaseModel
 
 from crma_api_client.resources.dataset import DatasetVersionsResponse
-from crma_api_client.resources.query import QueryRequest, QueryResponse
+from crma_api_client.resources.query import QueryLanguage, QueryResponse
 from .encoder import json_dumps_common
 
 logger = logging.getLogger(__name__)
@@ -168,17 +169,33 @@ class CRMAAPIClient:
         response = await self.request(f"/wave/datasets/{identifier}/versions", "GET")
         return DatasetVersionsResponse.parse_obj(response.json())
 
-    async def query(self, req: QueryRequest) -> QueryResponse:
+    async def query(
+        self,
+        query: str,
+        query_language: QueryLanguage = QueryLanguage.saql,
+        name: Optional[str] = None,
+        timezone: Optional[str] = None,
+    ) -> QueryResponse:
         """Execute a query
 
         Args:
-            req: Query request object
+            query: Query string
+            query_language: Query language. One of: SAQL (default), SQL
+            name: Query name. Defaults to a UUID
+            timezone: Timezone for the query
 
         Returns:
             QueryResponse object
 
         """
-        response = await self.request(
-            "/wave/query", "POST", req.dict(by_alias=True, exclude_none=True)
-        )
+        json_data = {
+            "query": query,
+            "name": name or str(uuid4()),
+            "queryLanguage": query_language.value,
+        }
+        if timezone:
+            json_data["timezone"] = timezone
+
+        response = await self.request("/wave/query", "POST", json_data=json_data)
+
         return QueryResponse.parse_obj(response.json())

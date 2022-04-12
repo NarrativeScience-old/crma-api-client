@@ -2,10 +2,9 @@
 
 
 from enum import Enum
-from typing import Any, Dict, List, Optional
-from uuid import uuid4
+from typing import Any, Dict, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from .util import to_camel
 
@@ -15,20 +14,6 @@ class QueryLanguage(str, Enum):
 
     saql = "SAQL"
     sql = "SQL"
-
-
-class QueryRequest(BaseModel):
-    """Request model for the query resource"""
-
-    name: str = Field(default_factory=lambda: str(uuid4()))
-    query: str
-    query_language: QueryLanguage = QueryLanguage.saql
-    timezone: Optional[str] = None
-
-    class Config:
-        """Model configuration"""
-
-        alias_generator = to_camel
 
 
 class QueryResults(BaseModel):

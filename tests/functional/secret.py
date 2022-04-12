@@ -5,15 +5,13 @@ import json
 from typing import Dict
 
 import boto3
-import httpx
 
-from crma_api_client.client import ConnectionInfo
-
-# Secret stored in the nonprod AWS account
+# Secret containing client id, client secret, username and password for a developer account
+# This is stored in the nonprod AWS account
 SECRET_NAME = "dev/nexio/crma-client"
 
 
-def get_secret(secret_name: str) -> Dict[str, str]:
+def get_secret(secret_name: str = SECRET_NAME) -> Dict[str, str]:
     """Gets a secret key from AWS Secrets Manager based on the secret_name
 
     Args:
@@ -36,22 +34,3 @@ def get_secret(secret_name: str) -> Dict[str, str]:
         secret = base64.b64decode(response["SecretBinary"])
 
     return json.loads(secret)
-
-
-def get_connection_info(secret_name: str = SECRET_NAME) -> ConnectionInfo:
-    """Get connection info for the dev Salesforce instance
-
-    Args:
-        secret_name: AWS secret name. Defaults to SECRET_NAME.
-
-    Returns:
-        ConnectionInfo object
-
-    """
-    secret = get_secret(secret_name)
-    response = httpx.post(
-        "https://login.salesforce.com/services/oauth2/token",
-        data=secret,
-        headers={"Accept": "application/json"},
-    )
-    return ConnectionInfo.parse_obj(response.json())

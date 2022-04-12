@@ -26,6 +26,44 @@ class ConnectionInfo(BaseModel):
         """Returns authorization header value"""
         return f"{self.token_type} {self.access_token}"
 
+    @classmethod
+    async def generate(
+        cls,
+        client_id: str,
+        client_secret: str,
+        username: str,
+        password: str,
+        grant_type: str = "password",
+    ) -> "ConnectionInfo":
+        """Create a connection info object by generating a fresh token
+
+        See https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_rest_authentication.htm
+
+        Args:
+            client_id: OAuth app client ID
+            client_secret: OAuth app client secret
+            username: Username for the user calling the API
+            password: Password for the user calling the API
+            grant_type: OAuth grant type
+
+        Returns:
+            new ConnectionInfo object
+
+        """
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://login.salesforce.com/services/oauth2/token",
+                data={
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "username": username,
+                    "password": password,
+                    "grant_type": grant_type,
+                },
+                headers={"Accept": "application/json"},
+            )
+            return cls.parse_obj(response.json())
+
 
 class CRMAAPIClient:
     """CRM Analytics REST API client"""

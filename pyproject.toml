@@ -28,3 +28,6 @@ skip = ["pyproject.toml", "crma_api_client", "tests", "README.md", ".circleci/co
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

@@ -1,16 +1,16 @@
 """Contains functional tests for the query resource"""
 
 import pytest
-from secret import get_connection_info
+from secret import get_secret
 
-from crma_api_client import CRMAAPIClient
+from crma_api_client.client import ConnectionInfo, CRMAAPIClient
 from crma_api_client.resources.query import QueryRequest
 
 
-@pytest.fixture(scope="module")
-def conn():
+@pytest.fixture()
+async def conn():
     """Get a connection info object for making requests using the API client"""
-    return get_connection_info()
+    return await ConnectionInfo.generate(**get_secret())
 
 
 @pytest.mark.asyncio

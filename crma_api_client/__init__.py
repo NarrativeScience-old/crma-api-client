@@ -1,3 +1,5 @@
 """CRM Analytics REST API Client"""
 
-__version__ = "0.1.0"
+from .client import CRMAAPIClient
+
+__version__ = "0.2.0"

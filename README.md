@@ -49,8 +49,6 @@ client = CRMAAPIClient(conn)
 Next, you can use methods on the client to make requests:
 
 ```python
-from crma_api_client.resources.query import QueryRequest
-
 response = await client.list_dataset_versions("Sample_Superstore_xls_Orders")
 version = response.versions[0]
 query = "\n".join(
@@ -61,7 +59,7 @@ query = "\n".join(
         """q = order q by 'Category' asc;""",
     ]
 )
-response = await client.query(QueryRequest(query=query))
+response = await client.query(query)
 assert response.results.records == [
     {"Category": "Furniture", "Sales": 741999.7953},
     {"Category": "Office Supplies", "Sales": 719047.032},

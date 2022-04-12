@@ -27,7 +27,7 @@ async def test_query(conn):
             """q = order q by 'Category' asc;""",
         ]
     )
-    response = await client.query(QueryRequest(name="test", query=query))
+    response = await client.query(QueryRequest(query=query))
     assert response.results.records == [
         {"Category": "Furniture", "Sales": 741999.7953},
         {"Category": "Office Supplies", "Sales": 719047.032},

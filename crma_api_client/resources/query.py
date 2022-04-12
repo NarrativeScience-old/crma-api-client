@@ -3,8 +3,9 @@
 
 from enum import Enum
 from typing import Any, Dict, List, Optional
+from uuid import uuid4
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .util import to_camel
 
@@ -19,7 +20,7 @@ class QueryLanguage(str, Enum):
 class QueryRequest(BaseModel):
     """Request model for the query resource"""
 
-    name: str
+    name: str = Field(default_factory=lambda: str(uuid4()))
     query: str
     query_language: QueryLanguage = QueryLanguage.saql
     timezone: Optional[str] = None

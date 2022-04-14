@@ -2,6 +2,7 @@
 
 
 from enum import Enum
+from functools import cached_property
 from typing import Any, Dict, List
 
 from pydantic import BaseModel
@@ -22,10 +23,15 @@ class ProjectionField(BaseModel):
     id: str
     type: str
 
-    @property
+    @cached_property
     def name(self) -> str:
         """Return field name that omits stream reference"""
         return self.id.split(".")[-1]
+
+    class Config:
+        """Model configuration"""
+
+        keep_untouched = (cached_property,)
 
 
 class LineageProjection(BaseModel):
@@ -72,7 +78,7 @@ class QueryResponse(BaseModel):
     query: str
     response_time: int
 
-    @property
+    @cached_property
     def fields(self) -> List[ProjectionField]:
         """Return the fields from the query response metadata
 
@@ -84,3 +90,4 @@ class QueryResponse(BaseModel):
         """Model configuration"""
 
         alias_generator = to_camel
+        keep_untouched = (cached_property,)

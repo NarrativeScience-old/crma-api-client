@@ -15,18 +15,18 @@ async def test_query(client: CRMAAPIClient):
         [
             f"""q = load "{version.dataset.id}/{version.id}";""",
             """q = group q by 'Category';""",
-            """q = foreach q generate q.'Category' as 'Category', sum(q.'Sales') as 'Sales';""",
-            """q = order q by 'Category' asc;""",
+            """q = foreach q generate q.'Category' as 'Jon\\'s Category', sum(q.'Sales') as 'Sales';""",
+            """q = order q by 'Jon\\'s Category' asc;""",
         ]
     )
     response = await client.query(query)
     assert response.results.records == [
-        {"Category": "Furniture", "Sales": 741999.7953},
-        {"Category": "Office Supplies", "Sales": 719047.032},
-        {"Category": "Technology", "Sales": 836154.033},
+        {"Jon's Category": "Furniture", "Sales": 741999.7953},
+        {"Jon's Category": "Office Supplies", "Sales": 719047.032},
+        {"Jon's Category": "Technology", "Sales": 836154.033},
     ]
     assert response.fields == [
-        ProjectionField(id="q.Category", type="string"),
+        ProjectionField(id="q.Jon's Category", type="string"),
         ProjectionField(id="q.Sales", type="numeric"),
     ]
-    assert response.fields[0].name == "Category"
+    assert response.fields[0].name == "Jon's Category"

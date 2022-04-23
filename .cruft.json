@@ -1,7 +1,7 @@
 {
   "template": "https://github.com/NarrativeScience/cookiecutter-python-lib",
-  "commit": "f31f5912ab949296517c6d65fc666b11926a5cf8",
-  "checkout": null,
+  "commit": "6241c2f60ad104873bbc3fb6769a1834cdee1287",
+  "checkout": "6241c2f",
   "context": {
     "cookiecutter": {
       "author_name": "Jonathan Drake",

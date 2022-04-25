@@ -3,9 +3,9 @@
 import asyncio
 
 import pytest
-from secret import get_secret
 
 from crma_api_client.client import ConnectionInfo, CRMAAPIClient
+from .secret import get_secret
 
 
 @pytest.fixture(scope="session")

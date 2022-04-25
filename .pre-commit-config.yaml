@@ -35,6 +35,12 @@ repos:
         # Need to define stages explicitly since `default_stages` was not being respected
         stages: [commit]
 
+  - repo: https://github.com/lk16/detect-missing-init
+    rev: v0.1.4
+    hooks:
+      - id: detect-missing-init
+        args: [--create, --track]
+
   - repo: https://github.com/bgimby-ns/pydocstyle
     rev: 305f311b
     hooks:
@@ -71,10 +77,9 @@ repos:
 
       - id: mypy
         name: Type check Python (mypy)
-        entry: mypy -p crma_api_client
+        entry: poetry run mypy -p crma_api_client
         language: python
         types: [ file, python ]
-        additional_dependencies: [ mypy==0.910 ]
         pass_filenames: false
 
       - id: flake8

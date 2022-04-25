@@ -8,7 +8,10 @@ import backoff
 import httpx
 from pydantic import BaseModel
 
-from crma_api_client.resources.dataset import DatasetVersionsResponse
+from crma_api_client.resources.dataset import (
+    DatasetVersionResponse,
+    DatasetVersionsResponse,
+)
 from crma_api_client.resources.query import QueryLanguage, QueryResponse
 from .encoder import json_dumps_common
 
@@ -168,6 +171,24 @@ class CRMAAPIClient:
         """
         response = await self.request(f"/wave/datasets/{identifier}/versions", "GET")
         return DatasetVersionsResponse.parse_obj(response.json())
+
+    async def get_dataset_version(
+        self, dataset_id: str, version_id: str
+    ) -> DatasetVersionResponse:
+        """Get a single version for a dataset
+
+        Args:
+            dataset_id: Dataset name or ID
+            version_id: Version ID
+
+        Returns:
+            the version of the dataset
+
+        """
+        response = await self.request(
+            f"/wave/datasets/{dataset_id}/versions/{version_id}", "GET"
+        )
+        return DatasetVersionResponse.parse_obj(response.json())
 
     async def query(
         self,

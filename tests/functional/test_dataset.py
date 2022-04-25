@@ -6,7 +6,7 @@ from crma_api_client.client import CRMAAPIClient
 
 
 @pytest.mark.asyncio
-async def test_query(client: CRMAAPIClient):
+async def test_get_dataset_version(client: CRMAAPIClient):
     """Should get the metadata for a particular dataset"""
     dataset_id = "Sample_Superstore_xls_Orders"
     versions_response = await client.list_dataset_versions(dataset_id)

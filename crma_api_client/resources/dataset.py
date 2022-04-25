@@ -2,12 +2,14 @@
 
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, TypeVar
 
 from pydantic import BaseModel, validator
 
 from .user import User
 from .util import to_camel
+
+T = TypeVar("T")
 
 
 class CRMAModel(BaseModel):
@@ -60,8 +62,22 @@ class XmdDateFields(CRMAModel):
     year: str
 
     @validator("fiscal_month", "fiscal_quarter", "fiscal_week", "fiscal_year")
-    def not_none(cls, v):
-        """The value should not be None"""
+    def not_none(cls, v: T) -> T:
+        """Validates that the given value is not None
+
+        This is needed since the Optional type doesn't distinguish between a field
+        being None and being missing.
+
+        Args:
+            v: the value to check
+
+        Raises:
+            ValueError: if the value is None
+
+        Returns:
+            the value if it's not None
+
+        """
         if v is None:
             raise ValueError("Fiscal fields may not be None")
         return v

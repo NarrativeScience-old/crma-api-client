@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "crma-api-client"
-version = "0.5.0"
+version = "0.6.0"
 description = "CRM Analytics REST API Client"
 authors = ["Jonathan Drake <jon.drake@salesforce.com>"]
 license = "BSD-3-Clause"
@@ -21,6 +21,7 @@ black = "^22.3.0"
 cruft = "^2.9.0"
 pytest-asyncio = "^0.18.3"
 boto3 = "^1.21.38"
+mypy = ">=0.942,<1"
 
 [tool.cruft]
 skip = ["pyproject.toml", "crma_api_client", "tests", "README.md", ".circleci/config.yml"]

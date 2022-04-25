@@ -10,7 +10,19 @@ from .user import User
 from .util import to_camel
 
 
-class Dataset(BaseModel):
+class CRMAModel(BaseModel):
+    """Base class for all models from the CRMA API
+
+    Has logic for converting camel case to snake case
+    """
+
+    class Config:
+        """Model configuration"""
+
+        alias_generator = to_camel
+
+
+class Dataset(CRMAModel):
     """Dataset model"""
 
     id: str
@@ -25,7 +37,7 @@ class DateType(Enum):
     date_time = "DateTime"
 
 
-class XmdDateFields(BaseModel):
+class XmdDateFields(CRMAModel):
     """Date fields in the extended metadata format
 
     See https://developer.salesforce.com/docs/atlas.en-us.230.0.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_xmd_main.htm#XmdDateFieldRepresentation
@@ -54,13 +66,8 @@ class XmdDateFields(BaseModel):
             raise ValueError("Fiscal fields may not be None")
         return v
 
-    class Config:
-        """Model configuration"""
 
-        alias_generator = to_camel
-
-
-class XmdDate(BaseModel):
+class XmdDate(CRMAModel):
     """Date in the extended metadata format
 
     See https://developer.salesforce.com/docs/atlas.en-us.230.0.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_xmd_main.htm#XmdDateRepresentation
@@ -75,13 +82,8 @@ class XmdDate(BaseModel):
     label: str
     type: DateType
 
-    class Config:
-        """Model configuration"""
 
-        alias_generator = to_camel
-
-
-class XmdDimension(BaseModel):
+class XmdDimension(CRMAModel):
     """Dimension in the Xmd format
 
     See https://developer.salesforce.com/docs/atlas.en-us.230.0.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_xmd_main.htm#XmdDimensionRepresentation
@@ -91,7 +93,7 @@ class XmdDimension(BaseModel):
     label: str
 
 
-class XmdMeasure(BaseModel):
+class XmdMeasure(CRMAModel):
     """Measure in the Xmd format
 
     See https://developer.salesforce.com/docs/atlas.en-us.230.0.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_xmd_main.htm#XmdMeasureRepresentation
@@ -101,7 +103,7 @@ class XmdMeasure(BaseModel):
     label: str
 
 
-class DatasetXmd(BaseModel):
+class DatasetXmd(CRMAModel):
     """Extended metadata for a dataset
 
     See https://developer.salesforce.com/docs/atlas.en-us.230.0.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_xmd_main.htm
@@ -119,13 +121,8 @@ class DatasetXmd(BaseModel):
     type: str
     url: str
 
-    class Config:
-        """Model configuration"""
 
-        alias_generator = to_camel
-
-
-class DatasetVersion(BaseModel):
+class DatasetVersion(CRMAModel):
     """Dataset version model
 
     See https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_responses_dataset_version.htm
@@ -141,11 +138,6 @@ class DatasetVersion(BaseModel):
     type: str
     url: str
 
-    class Config:
-        """Model configuration"""
-
-        alias_generator = to_camel
-
 
 class DatasetVersionResponse(DatasetVersion):
     """Dataset version model
@@ -156,7 +148,7 @@ class DatasetVersionResponse(DatasetVersion):
     xmd_main: DatasetXmd
 
 
-class DatasetVersionsResponse(BaseModel):
+class DatasetVersionsResponse(CRMAModel):
     """Response model for a list of dataset versions
 
     See https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_responses_dataset_version_collection.htm

@@ -3,9 +3,10 @@
 
 from enum import Enum
 from functools import cached_property
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Literal, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing_extensions import Annotated
 
 from .util import to_camel
 
@@ -40,11 +41,24 @@ class LineageProjection(BaseModel):
     field: ProjectionField
 
 
-class QueryLineage(BaseModel):
+class ForeachLineage(BaseModel):
     """Lineage that describes field projections in a query result"""
 
-    type: str
+    type: Literal["foreach"] = "foreach"
     projections: List[LineageProjection]
+
+
+class UnionLineage(BaseModel):
+    """Lineage that describes the union of field projections in a query result"""
+
+    type: Literal["union"] = "union"
+    inputs: List[ForeachLineage]
+
+
+# Define a submodel for lineage values
+QueryLineage = Annotated[
+    Union[UnionLineage, ForeachLineage], Field(discriminator="type")
+]
 
 
 class QueryResultsMetadata(BaseModel):
@@ -84,7 +98,15 @@ class QueryResponse(BaseModel):
 
         This assumes there is only one metadata object and one lineage object.
         """
-        return [p.field for p in self.results.metadata[0].lineage.projections]
+        lineage = self.results.metadata[0].lineage
+        if isinstance(lineage, UnionLineage):
+            # Unions require that all inputs have the same structure, so we only
+            # need the projections from the first input
+            projections = lineage.inputs[0].projections
+        else:
+            projections = lineage.projections
+
+        return [p.field for p in projections]
 
     class Config:
         """Model configuration"""

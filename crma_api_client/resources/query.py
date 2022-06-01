@@ -5,7 +5,8 @@ from enum import Enum
 from functools import cached_property
 from typing import Any, Dict, List, Literal, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing_extensions import Annotated
 
 from .util import to_camel
 
@@ -54,10 +55,14 @@ class UnionLineage(BaseModel):
     inputs: List[ForeachLineage]
 
 
+# Define a submodel for lineage values
+Lineage = Annotated[Union[UnionLineage, ForeachLineage], Field(discriminator="type")]
+
+
 class QueryResultsMetadata(BaseModel):
     """Query results metadata"""
 
-    lineage: Union[UnionLineage, ForeachLineage]
+    lineage: Lineage
     query_language: QueryLanguage
 
     class Config:

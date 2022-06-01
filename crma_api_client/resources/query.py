@@ -95,12 +95,11 @@ class QueryResponse(BaseModel):
         if isinstance(lineage, UnionLineage):
             # Unions require that all inputs have the same structure, so we only
             # need the projections from the first input
-           projections = lineage.inputs[0].projections
+            projections = lineage.inputs[0].projections
         else:
             projections = lineage.projections
 
         return [p.field for p in projections]
-
 
     class Config:
         """Model configuration"""

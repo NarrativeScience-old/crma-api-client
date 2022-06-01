@@ -218,5 +218,4 @@ class CRMAAPIClient:
             json_data["timezone"] = timezone
 
         response = await self.request("/wave/query", "POST", json_data=json_data)
-        self.logger.info("CRMA response", response=response.json())
         return QueryResponse.parse_obj(response.json())

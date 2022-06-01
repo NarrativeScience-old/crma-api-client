@@ -56,13 +56,15 @@ class UnionLineage(BaseModel):
 
 
 # Define a submodel for lineage values
-Lineage = Annotated[Union[UnionLineage, ForeachLineage], Field(discriminator="type")]
+QueryLineage = Annotated[
+    Union[UnionLineage, ForeachLineage], Field(discriminator="type")
+]
 
 
 class QueryResultsMetadata(BaseModel):
     """Query results metadata"""
 
-    lineage: Lineage
+    lineage: QueryLineage
     query_language: QueryLanguage
 
     class Config:

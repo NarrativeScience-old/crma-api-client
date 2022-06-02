@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "crma-api-client"
-version = "0.7.0"
+version = "0.8.0"
 description = "CRM Analytics REST API Client"
 authors = ["Jonathan Drake <jon.drake@salesforce.com>"]
 license = "BSD-3-Clause"
@@ -10,7 +10,7 @@ repository = "https://github.com/NarrativeScience/crma-api-client"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-httpx = "^0.22.0"
+httpx = ">=0.22,<0.24"
 backoff = "^1.11.1"
 pydantic = "^1.9.0"
 

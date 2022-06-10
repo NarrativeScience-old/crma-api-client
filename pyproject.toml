@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "crma-api-client"
-version = "0.8.0"
+version = "0.9.0"
 description = "CRM Analytics REST API Client"
 authors = ["Jonathan Drake <jon.drake@salesforce.com>"]
 license = "BSD-3-Clause"

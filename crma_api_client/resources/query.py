@@ -26,7 +26,7 @@ class ProjectionField(BaseModel):
     @cached_property
     def name(self) -> str:
         """Return field name that omits stream reference"""
-        return self.id.split(".")[-1]
+        return self.id.split(".", 1)[-1]
 
     class Config:
         """Model configuration"""
